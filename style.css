@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 :root {
@@ -8,8 +9,10 @@
     --background-color: #111827;
     --outline-color: #374151;
     --text-main-color: #e5e7eb;
+    --text-second-color: #9ca3af;
     --button-color: #d1d5db;
     --button-text-color: #1f2937;
+    --book-color: #1f2937;
 }
 
 body {
@@ -18,6 +21,7 @@ body {
     --footer-height: 3rem;
 }
 
+/* HEADER */
 header {
     height: var(--header-height);
     display: grid;
@@ -42,22 +46,24 @@ header svg:hover {
     transition: all 0.15s;
 }
 
+/* MAIN */
 main {
     width: 100%;
-    height: 100%;
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
     background-color: var(--background-color);
     display: grid;
-    justify-content: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
 }
 
 .main-inner {
     width: 90%;
-    height: 100%;
+    height: 90%;
     display: grid;
     grid-template-rows: auto 1fr;
-    align-items: center;
     padding-top: 2rem;
+    justify-items: center;
 }
 
 .add {
@@ -79,6 +85,84 @@ main {
     opacity: 0.5;
 }
 
+.book-display {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-display-inner {
+    width: 100%;
+    height: 90%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.book {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 4fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    background-color: var(--book-color);
+    border-radius: 0.5rem;
+    border: 1px solid var(--outline-color);
+    padding-left: 1.5rem;
+    align-items: center;
+}
+
+.top {
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 30px;
+}
+
+.cover {
+    max-width: 100px;
+    max-height: auto;
+    overflow: hidden;
+}
+
+.cover img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.book h1 {
+    font-size: 1.2rem;
+    color: var(--text-main-color);
+}
+
+.book h2 {
+    font-size: 1rem;
+    color: var(--text-second-color);
+}
+
+.book h3 {
+    font-size: 0.8rem;
+    color: var(--text-second-color);
+}
+
+.status {
+    display: grid;
+    grid-template-columns: 15px;
+    align-items: center;
+    justify-content: end;
+    padding-right: 1rem;
+    align-self: self-start;
+}
+
+.status svg {
+    fill: #22c55e;
+}
+
+/* FOOTER */
 footer {
     height: var(--footer-height);
     display: grid;
