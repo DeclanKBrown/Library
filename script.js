@@ -14,6 +14,7 @@ let title;
 let author;
 let pages;
 let filePath;
+let selectedFile;
 
 // Displays Cover in Add Book Pop up
 const addImage = document.querySelector('.addImage');
@@ -30,13 +31,13 @@ addImage.addEventListener('change', function() {
 const submit = document.querySelector('.submit');
 submit.addEventListener('click', function() {
     //Get Values from input 
-    MainTitle = document.querySelector('.title-input').value;
-    MainAuthor = document.querySelector('.author-input').value;
-    MainPages = document.querySelector('.pages-input').value;
-    const selectedFile = addImage.files[0];
-    MainFilePath = URL.createObjectURL(selectedFile);
+    title = document.querySelector('.title-input').value;
+    author = document.querySelector('.author-input').value;
+    pages = document.querySelector('.pages-input').value;
+    selectedFile = addImage.files[0];
+    filePath = URL.createObjectURL(selectedFile);
     //Create Object
-    let book = new Book(MainTitle, MainAuthor, MainPages, MainFilePath);
+    let book = new Book(title, author, pages, filePath);
     //Add to array
     Library.push(book);
     displayBook();
@@ -54,7 +55,13 @@ function addBook() {
 }
 
 function removePopup() {
-    document.getElementById('modal').style = 'display:none;'
+    document.querySelector('.title-input').value = '';
+    document.querySelector('.author-input').value = '';
+    document.querySelector('.pages-input').value = '';
+    const selectedFile = addImage.files[0];
+    addImage.value = '';
+    bookCover.src = '';
+    document.getElementById('modal').style = 'display:none;';
 }
 
 function displayBook() {

@@ -7,4 +7,4 @@
 <!-- - fix CSS resizing  -->
 - Autofut css
 - Light Dark mode toggle
-- Clear values from add new book
+<!-- - Clear values from add new book -->
