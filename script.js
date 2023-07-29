@@ -94,7 +94,7 @@ function onPageLoad() {
     
         const status = document.createElement('div');
         status.classList.add('status');
-        status.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
+        status.innerHTML = '<svg class="read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
     
         const h1 = document.createElement('h1');
         h1.innerHTML = Library[book].title
@@ -115,6 +115,7 @@ function onPageLoad() {
     
         const inner = document.querySelector('.book-display-inner');
         inner.appendChild(card);
+        attachEventList();
     }
 }
 window.onload = onPageLoad;
@@ -136,8 +137,9 @@ function displayBook() {
     
         const status = document.createElement('div');
         status.classList.add('status');
-        status.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
-    
+        
+        status.innerHTML = '<svg class="read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
+
         const h1 = document.createElement('h1');
         h1.innerHTML = book.title
     
@@ -157,4 +159,27 @@ function displayBook() {
     
         const inner = document.querySelector('.book-display-inner');
         inner.appendChild(card);
+        attachEventList();
+}
+
+//CHANGE READ STATUS
+function attachEventList() {
+    let readStatus = document.querySelectorAll('.read-status');
+    console.log(readStatus);
+    readStatus.forEach((element) => {
+    element.addEventListener('click', changeStatus);
+    });
+}
+
+function changeStatus() {
+    if (this.classList.contains('have-read')) {
+        this.classList.remove('have-read');
+        this.classList.add('havent-read');
+    } else if (this.classList.contains('havent-read')) {
+        this.classList.remove('havent-read');
+        this.classList.add('am-reading');
+    } else if (this.classList.contains('am-reading')) {
+        this.classList.remove('am-reading');
+        this.classList.add('have-read');
+    }
 }

@@ -1,7 +1,7 @@
 # Library
 
 UPDATES
-- Save labrary to local storage
+<!-- - Save labrary to local storage -->
 <!-- - On page load iterate through the loop displaying all books -->
 <!-- - Display only the added book on submit -->
 - Add read/reading/not read yet color function
@@ -12,5 +12,5 @@ UPDATES
 - fix grid auto rows
 
 COMPLETED
-- Saved to local on reload displays books
+<!-- - Saved to local on reload displays books -->
 - Filter by read, reading, havent read
