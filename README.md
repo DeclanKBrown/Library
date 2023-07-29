@@ -8,3 +8,4 @@
 - Autofut css
 - Light Dark mode toggle
 <!-- - Clear values from add new book -->
+- fix grid auto rows
