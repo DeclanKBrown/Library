@@ -39,15 +39,6 @@ submit.addEventListener('click', function() {
     //Create Object
     let book = new Book(title, author, pages, filePath);
     //Save Library to local
-    let existingLibrary = localStorage.getItem('Library');
-    if (existingLibrary) {
-        existingLibrary = JSON.parse(existingLibrary);
-        for (let existBook in existingLibrary) {
-            Library.push(existingLibrary[existBook]);
-        }
-    } else {
-    existingLibrary = [];
-    }
     Library.push(book);
     localStorage.setItem('Library', JSON.stringify(Library));
     displayBook();
@@ -77,9 +68,18 @@ function removePopup() {
 
 //Display the books in page load
 function onPageLoad() {
-    let books = JSON.parse(localStorage.getItem('Library'));
-    console.log(typeof books)
-    for (let book in books) {
+    let existingLibrary = localStorage.getItem('Library'); // Get the preexisting items from local sotrage and add to the array
+    if (existingLibrary) {                                  
+        existingLibrary = JSON.parse(existingLibrary);
+        for (let existBook in existingLibrary) {
+            let i = 0;
+            Library.push(existingLibrary[existBook]);  
+            ++i;
+        }
+    }
+
+    // let books = JSON.parse(localStorage.getItem('Library'));
+    for (let book in Library) {
         const card = document.createElement('div');
         card.classList.add('book');
     
@@ -90,20 +90,20 @@ function onPageLoad() {
         cover.classList.add('cover');
     
         const img = document.createElement('img');
-        img.src = books[book].file;
+        img.src = Library[book].file;
     
         const status = document.createElement('div');
         status.classList.add('status');
         status.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
     
         const h1 = document.createElement('h1');
-        h1.innerHTML = books[book].title
+        h1.innerHTML = Library[book].title
     
         const h2 = document.createElement('h2');
-        h2.innerHTML = books[book].author;
+        h2.innerHTML = Library[book].author;
     
         const h3 = document.createElement('h3');
-        h3.innerHTML = books[book].pages;
+        h3.innerHTML = Library[book].pages;
     
         card.appendChild(top);
         top.appendChild(cover);
@@ -121,6 +121,7 @@ window.onload = onPageLoad;
 
 function displayBook() {
     let book = Library[Library.length - 1];
+
     const card = document.createElement('div');
         card.classList.add('book');
     
