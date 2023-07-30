@@ -365,6 +365,10 @@ input[type="file"]::file-selector-button:active {
     height: 2rem;
 }
 
+.pages-input {
+    padding-right: 1rem;
+}
+
 .invalid-input {
     border: 1px solid red;
 }
