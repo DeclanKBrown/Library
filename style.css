@@ -195,6 +195,25 @@ main {
     fill: #f59e0b;
 }
 
+.bottom {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+}
+
+.del {
+    width: 60%;
+    padding-right: 1rem;
+    border-radius: 0.2rem;
+    border: 1px solid var(--outline-color);
+    background-color:var(--header-color);
+    color: var(--text-main-color);
+    padding-left: 0.3rem;
+}
+
+.del:active {
+    border: 1px solid red;
+}
+
 /* POPUP */
 
 .overlay {

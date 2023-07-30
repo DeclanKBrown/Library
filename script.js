@@ -116,6 +116,7 @@ function onPageLoad() {
     for (let book in Library) {
         const card = document.createElement('div');
         card.classList.add('book');
+        card.classList.add(`book-${book}`);
     
         const top = document.createElement('div');
         top.classList.add('top');
@@ -137,8 +138,16 @@ function onPageLoad() {
         const h2 = document.createElement('h2');
         h2.innerHTML = Library[book].author;
     
+        const bottom = document.createElement('div');
+        bottom.classList.add('bottom');
+
         const h3 = document.createElement('h3');
         h3.innerHTML = Library[book].pages;
+
+        const del = document.createElement('button');
+        del.innerHTML = 'Del';
+        del.classList.add(`del-${book}`)
+        del.classList.add('del');
     
         card.appendChild(top);
         top.appendChild(cover);
@@ -146,20 +155,25 @@ function onPageLoad() {
         top.appendChild(status);
         card.appendChild(h1);
         card.appendChild(h2);
-        card.appendChild(h3);
+        card.appendChild(bottom)
+        bottom.appendChild(h3);
+        bottom.appendChild(del);
     
         const inner = document.querySelector('.book-display-inner');
         inner.appendChild(card);
         attachEventList();
+        deleteAttachEventList();
     }
 }
 window.onload = onPageLoad;
 
 function displayBook() {
     let book = Library[Library.length - 1];
+    let index = Library.length - 1;
 
     const card = document.createElement('div');
         card.classList.add('book');
+        card.classList.add(`book-${index}`);
     
         const top = document.createElement('div');
         top.classList.add('top');
@@ -173,7 +187,6 @@ function displayBook() {
         const status = document.createElement('div');
         status.classList.add('status');
         
-        let index = Library.length - 1;
         status.innerHTML = `<svg class="${index} read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
 
         const h1 = document.createElement('h1');
@@ -181,9 +194,17 @@ function displayBook() {
     
         const h2 = document.createElement('h2');
         h2.innerHTML = book.author;
-    
+
+        const bottom = document.createElement('div');
+        bottom.classList.add('bottom');
+
         const h3 = document.createElement('h3');
         h3.innerHTML = book.pages;
+
+        const del = document.createElement('button');
+        del.innerHTML = 'Del';
+        del.classList.add(`del-${index}`)
+        del.classList.add('del');
     
         card.appendChild(top);
         top.appendChild(cover);
@@ -191,11 +212,14 @@ function displayBook() {
         top.appendChild(status);
         card.appendChild(h1);
         card.appendChild(h2);
-        card.appendChild(h3);
+        card.appendChild(bottom)
+        bottom.appendChild(h3);
+        bottom.appendChild(del);
     
         const inner = document.querySelector('.book-display-inner');
         inner.appendChild(card);
         attachEventList();
+        deleteAttachEventList();
 }
 
 //CHANGE READ STATUS
@@ -235,4 +259,27 @@ function getStatus(book) {
     } else if (Library[book].status == 'reading') {
         return `<svg class="${book} read-status am-reading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
     }
+}
+
+
+function deleteAttachEventList() {
+    let del = document.querySelectorAll('.del');
+    del.forEach((element) => {
+    element.addEventListener('click', delCard);
+    });
+}
+
+function delCard() {
+    let ind = this.classList[0];
+    let index = parseInt(ind.substr(ind.length - 1));
+    Library.splice(index, 1);
+    localStorage.setItem('Library', JSON.stringify(Library));
+
+    let nodes = document.querySelectorAll(`.book`);
+    nodes.forEach((node) => {
+        if (node.classList[1] == `book-${index}`) {
+            node.remove();
+        }
+    });
+
 }
