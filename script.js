@@ -271,7 +271,8 @@ function deleteAttachEventList() {
 
 function delCard() {
     let ind = this.classList[0];
-    let index = parseInt(ind.substr(ind.length - 1));
+    let index = ind.split("-");
+    index = parseInt(index[1]);
     Library.splice(index, 1);
     localStorage.setItem('Library', JSON.stringify(Library));
 
