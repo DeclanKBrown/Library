@@ -10,18 +10,22 @@
     --outline-color: #374151;
     --text-main-color: #e5e7eb;
     --text-second-color: #9ca3af;
-    --button-color: #d1d5db;
+    --button-color: #374151;
     --button-text-color: #1f2937;
     --book-color: #1f2937;
     --read-btn: #22c55e;
     --reading-btn: #f59e0b;
     --hn-read-btn: #dc2626;
+    --outline-second-color: #6b7280;
 }
 
 body {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --header-height: 5rem;
     --footer-height: 3rem;
+    --main-height: calc(100vh - var(--header-height) - var(--footer-height));
+    display: grid;
+    grid-template-rows: var(--header-height), var(--main-height), var(--footer-height);
 }
 
 /* HEADER */
@@ -61,12 +65,13 @@ header svg:hover {
 /* MAIN */
 main {
     width: 100%;
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-height: var(--main-height);
     background-color: var(--background-color);
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     align-items: center;
+    padding-bottom: 2rem;
 }
 
 .main-inner {
@@ -90,7 +95,8 @@ main {
     background-color: var(--button-color);
     border: none;
     border-radius: 0.8rem;
-    color: var(--button-text-color);
+    color: var(--text-main-color);
+    border: 1px solid var(--outline-second-color);
 }
 
 .add:hover {
@@ -116,14 +122,15 @@ main {
     display: grid;
     justify-items: center;
     align-items: center;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: repeat(2, 300px);
+    grid-auto-rows: 300px;
     gap: 2rem;
 }
 
 .book {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: grid;
     grid-template-rows: 4fr 1fr 1fr 1fr;
     grid-template-columns: 1fr;

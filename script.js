@@ -1,10 +1,11 @@
 let Library = [];
 
-function Book(title, author, pages, file) {
+function Book(title, author, pages, file, status) {
     this.title = title,
     this.author = author,
     this.pages = pages,
-    this.file = file;
+    this.file = file
+    this.status = status;
 }
 
 const addbtn = document.querySelector('.add');
@@ -37,7 +38,7 @@ submit.addEventListener('click', function() {
     selectedFile = addImage.files[0];
     filePath = URL.createObjectURL(selectedFile);
     //Create Object
-    let book = new Book(title, author, pages, filePath);
+    let book = new Book(title, author, pages, filePath, 'haven\'t read');
     //Save Library to local
     Library.push(book);
     localStorage.setItem('Library', JSON.stringify(Library));
@@ -72,13 +73,10 @@ function onPageLoad() {
     if (existingLibrary) {                                  
         existingLibrary = JSON.parse(existingLibrary);
         for (let existBook in existingLibrary) {
-            let i = 0;
             Library.push(existingLibrary[existBook]);  
-            ++i;
         }
     }
 
-    // let books = JSON.parse(localStorage.getItem('Library'));
     for (let book in Library) {
         const card = document.createElement('div');
         card.classList.add('book');
@@ -94,8 +92,9 @@ function onPageLoad() {
     
         const status = document.createElement('div');
         status.classList.add('status');
-        status.innerHTML = '<svg class="read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
-    
+        // status.innerHTML = `<svg class="${book} read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
+        status.innerHTML = getStatus(book);
+
         const h1 = document.createElement('h1');
         h1.innerHTML = Library[book].title
     
@@ -138,7 +137,8 @@ function displayBook() {
         const status = document.createElement('div');
         status.classList.add('status');
         
-        status.innerHTML = '<svg class="read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>';
+        let index = Library.length - 1;
+        status.innerHTML = `<svg class="${index} read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
 
         const h1 = document.createElement('h1');
         h1.innerHTML = book.title
@@ -165,7 +165,6 @@ function displayBook() {
 //CHANGE READ STATUS
 function attachEventList() {
     let readStatus = document.querySelectorAll('.read-status');
-    console.log(readStatus);
     readStatus.forEach((element) => {
     element.addEventListener('click', changeStatus);
     });
@@ -175,11 +174,29 @@ function changeStatus() {
     if (this.classList.contains('have-read')) {
         this.classList.remove('have-read');
         this.classList.add('havent-read');
+        let index = parseInt(this.classList[0]);
+        Library[index].status = 'haven\'t read';
     } else if (this.classList.contains('havent-read')) {
         this.classList.remove('havent-read');
         this.classList.add('am-reading');
+        let index = parseInt(this.classList[0]);
+        Library[index].status = 'reading';
     } else if (this.classList.contains('am-reading')) {
         this.classList.remove('am-reading');
         this.classList.add('have-read');
+        let index = parseInt(this.classList[0]);
+        Library[index].status = 'read';
+    }
+    localStorage.setItem('Library', JSON.stringify(Library));
+}
+
+//GETS READING STATUS AND DISPLAYS 
+function getStatus(book) {
+    if (Library[book].status == 'read') {
+        return `<svg class="${book} read-status have-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
+    } else if (Library[book].status == 'haven\'t read') {
+        return `<svg class="${book} read-status havent-read" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
+    } else if (Library[book].status == 'reading') {
+        return `<svg class="${book} read-status am-reading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-full</title><path d="M12 2A10 10 0 1 1 2 12A10 10 0 0 1 12 2Z" /></svg>`;
     }
 }
