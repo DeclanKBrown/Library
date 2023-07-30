@@ -28,22 +28,54 @@ addImage.addEventListener('change', function() {
     }
 })
 
+//Remove Red outline
+let title1 = document.querySelector('.title-input');
+title1.addEventListener('blur', removeTErr);
+let author1 = document.querySelector('.author-input');
+author1.addEventListener('blur', removeAErr);
+let pages1 = document.querySelector('.pages-input');
+pages1.addEventListener('blur', removePErr);
+function removeTErr() {
+    title1.classList.remove('invalid-input');
+}
+function removeAErr() {
+    author1.classList.remove('invalid-input')
+}
+function removePErr() {
+    pages1.classList.remove('invalid-input')
+}
+
 // Add Book 
 const submit = document.querySelector('.submit');
 submit.addEventListener('click', function() {
     //Get Values from input 
     title = document.querySelector('.title-input').value;
+    if (title == '') {
+        document.querySelector('.title-input').classList.add('invalid-input')
+    }
     author = document.querySelector('.author-input').value;
+    if (author == '') {
+        document.querySelector('.author-input').classList.add('invalid-input')
+    }
     pages = document.querySelector('.pages-input').value;
+    if (pages == '') {
+        document.querySelector('.pages-input').classList.add('invalid-input')
+    }
     selectedFile = addImage.files[0];
-    filePath = URL.createObjectURL(selectedFile);
-    //Create Object
-    let book = new Book(title, author, pages, filePath, 'haven\'t read');
-    //Save Library to local
-    Library.push(book);
-    localStorage.setItem('Library', JSON.stringify(Library));
-    displayBook();
-    removePopup();
+    if (typeof selectedFile != 'undefined') {
+        filePath = URL.createObjectURL(selectedFile);
+    } else {
+        addImage.classList.add('invalid-image')
+    }
+    if (title !== '' && author != '' && pages != '' && typeof filePath != 'undefined') {
+        //Create Object
+        let book = new Book(title, author, pages, filePath, 'haven\'t read');
+        //Save Library to local
+        Library.push(book);
+        localStorage.setItem('Library', JSON.stringify(Library));
+        displayBook();
+        removePopup();
+    }
 })
 
 const cancel = document.querySelector('.cancel');
@@ -65,6 +97,10 @@ function removePopup() {
     addImage.value = '';
     bookCover.src = '';
     document.getElementById('modal').style = 'display:none;';
+    document.querySelector('.title-input').classList.remove('invalid-input')
+    document.querySelector('.author-input').classList.remove('invalid-input')
+    document.querySelector('.pages-input').classList.remove('invalid-input')
+
 }
 
 //Display the books in page load
